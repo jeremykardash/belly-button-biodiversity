@@ -1,9 +1,5 @@
-function unpack(rows, index) {
-    return rows.map(function(row) {
-      return row[index];
-    });
-  }
 
+//Function that charts all the data
 function chart(sample) {
     d3.json("../../data/samples.json").then(data=> {
         console.log(data)
@@ -23,7 +19,6 @@ function chart(sample) {
         // get the top 10 labels for the plot
         var labels = samples.otu_labels.slice(0, 10);
 
-       
 
         //Bar Chart
         //Trace for bar
@@ -46,6 +41,7 @@ function chart(sample) {
 
         //Plot bar chart
         Plotly.newPlot('bar', dataBar, layout);
+
 
         //Bubble Chart
         //Create variables for datapoints
@@ -77,14 +73,13 @@ function chart(sample) {
         //Plot bubble
         Plotly.newPlot('bubble', bubbleData, layoutBubble)
 
-        //Gauge Plot
-        //Guage data
 
+        //Gauge Plot
         //Get wash frequency for gauge chart
-         
         var metadata = data.metadata.filter(s => s.id.toString() === sample)[0]
         var wfreq = metadata.wfreq
 
+        //Create trace/data for Gauge
         var dataGauge = [
             {
             domain: { x: [0, 1], y: [0, 1] },
@@ -146,28 +141,30 @@ function getInfo(sample) {
     })
 };
 
+//Option changed function relates the the selection field on the page and will change wil the input
 function optionChanged(sample) {
     chart(sample);
     getInfo(sample)
 };
 
 function init() {
-    // select dropdown menu 
+    // select dropdown menu item
     var dropdown = d3.select("#selDataset");
 
     // read the data 
     d3.json("../../data/samples.json").then((data)=> {
         console.log(data)
 
-        // get the id data to the dropdwown menu
+        //Append the id data to the dropdwown menu
         data.names.forEach(function(name) {
             dropdown.append("option").text(name).property("value");
         });
 
-        // call the functions to display the data and the plots to the page
+        //Call the functions to display the data and the plots to the page
         chart(data.names[0]);
         getInfo(data.names[0]);
     });
 };
 
-init()
+//Call the initial function to load page
+init();
