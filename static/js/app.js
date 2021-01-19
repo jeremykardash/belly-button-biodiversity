@@ -7,7 +7,7 @@ function unpack(rows, index) {
 function chart(sample) {
     d3.json("../../data/samples.json").then(data=> {
         console.log(data)
-
+        
         //Filter sample by chosen ID
         var samples = data.samples.filter(s => s.id.toString() === sample)[0]
 
@@ -23,6 +23,8 @@ function chart(sample) {
         // get the top 10 labels for the plot
         var labels = samples.otu_labels.slice(0, 10);
 
+       
+
         //Bar Chart
         //Trace for bar
         var trace = {
@@ -30,18 +32,20 @@ function chart(sample) {
             y: OTU_id,
             text: labels,
             marker: {
-              color: 'red'},
+              color: 'rgb(116,173,209)'},
             type:"bar",
             orientation: "h",
         };
 
-        var data = [trace];
+        //Data for bar
+        var dataBar = [trace];
 
+        //Layout for bar
         var layout = {
-            title: `ID-${sample} Top 10 OTUs`
-        }
+            title: `ID-${sample} Top 10 OTUs`};
 
-        Plotly.newPlot('bar', data, layout)
+        //Plot bar chart
+        Plotly.newPlot('bar', dataBar, layout);
 
         //Bubble Chart
         //Create variables for datapoints
@@ -62,17 +66,26 @@ function chart(sample) {
   
         };
 
+        //Data for bubble
         var bubbleData = [traceBubble];
 
+        //Layout for bubble
         var layoutBubble = {
             xaxis: {title: 'UTO ID' }
         }
 
+        //Plot bubble
         Plotly.newPlot('bubble', bubbleData, layoutBubble)
 
-        var wfreq = data.metadata.map(d => d.wfreq)
-        
-        var data_g = [
+        //Gauge Plot
+        //Guage data
+
+        //Get wash frequency for gauge chart
+         
+        var metadata = data.metadata.filter(s => s.id.toString() === sample)[0]
+        var wfreq = metadata.wfreq
+
+        var dataGauge = [
             {
             domain: { x: [0, 1], y: [0, 1] },
             value: parseFloat(wfreq),
@@ -80,24 +93,29 @@ function chart(sample) {
             type: "indicator",
             
             mode: "gauge+number",
+
             gauge: { axis: { range: [null, 9] },
                      steps: [
-                      { range: [0, 2], color: "yellow" },
-                      { range: [2, 4], color: "cyan" },
-                      { range: [4, 6], color: "teal" },
-                      { range: [6, 8], color: "lime" },
-                      { range: [8, 9], color: "green" },
+                      { range: [0, 1], color: "rgb(215,48,39)" },
+                      { range: [1, 2], color: "rgb(244,109,67)" },
+                      { range: [2, 3], color: "rgb(253,174,97)" },
+                      { range: [3, 4], color: "rgb(254,224,144)" },
+                      { range: [4, 5], color: "rgb(224,243,248)" },
+                      { range: [5, 6], color: "rgb(171,217,233)" },
+                      { range: [6, 7], color: "rgb(116,173,209)" },
+                      { range: [7, 8], color: "rgb(69,117,180)" },
+                      { range: [8, 9], color: "rgb(49,54,149)" },
                     ]}
                 
             }
           ];
-          var layout_g = { 
+          var layoutGauge = { 
               width: 700, 
               height: 600, 
               margin: { t: 20, b: 40, l:100, r:100 } 
             };
 
-          Plotly.newPlot("gauge", data_g);
+          Plotly.newPlot("gauge", dataGauge, layoutGauge);
 
     });
     
@@ -123,7 +141,7 @@ function getInfo(sample) {
         
         //
         Object.entries(samples).forEach((key) => {   
-            demoInfo.append("h4").text(key[0].toUpperCase() + ": " + key[1] + "\n");    
+            demoInfo.append("p").text(key[0].toUpperCase() + ": " + key[1] + "\n");    
         });
     })
 };
