@@ -59,7 +59,6 @@ function chart(sample) {
                 color: bubbleSample
             },
             text: bubbleLabels
-  
         };
 
         //Data for bubble
@@ -84,7 +83,7 @@ function chart(sample) {
             {
             domain: { x: [0, 1], y: [0, 1] },
             value: parseFloat(wfreq),
-            title: { text: `Weekly Washing Frequency ` },
+            title: { text: `Weekly Washing Frequency` },
             type: "indicator",
             
             mode: "gauge+number",
