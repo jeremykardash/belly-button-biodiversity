@@ -1,7 +1,7 @@
 
 //Function that charts all the data
 function chart(sample) {
-    d3.json("data/samples.json").then(data=> {
+    d3.json("samples.json").then(data=> {
         console.log(data)
         
         //Filter sample by chosen ID
@@ -117,7 +117,7 @@ function chart(sample) {
 };
 
 function getInfo(sample) {
-    d3.json("data/samples.json").then(data=> {
+    d3.json("samples.json").then(data=> {
         
 
         //Isolate for data
