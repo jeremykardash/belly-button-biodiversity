@@ -167,6 +167,3 @@ function init() {
 
 //Call the initial function to load page
 init();
-
-var button = d3.select("#btn");
-button.on('click', init());
