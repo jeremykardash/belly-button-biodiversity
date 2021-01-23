@@ -1,7 +1,7 @@
 
 //Function that charts all the data
 function chart(sample) {
-    d3.json("../../data/samples.json").then(data=> {
+    d3.json("data/samples.json").then(data=> {
         console.log(data)
         
         //Filter sample by chosen ID
@@ -167,3 +167,6 @@ function init() {
 
 //Call the initial function to load page
 init();
+
+var button = d3.select("#btn");
+button.on('click', init());
