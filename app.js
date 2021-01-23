@@ -117,7 +117,7 @@ function chart(sample) {
 };
 
 function getInfo(sample) {
-    d3.json("../../data/samples.json").then(data=> {
+    d3.json("samples.json").then(data=> {
         
 
         //Isolate for data
